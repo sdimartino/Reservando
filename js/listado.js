@@ -98,7 +98,7 @@ Listado.prototype.obtenerRestaurantes = function(filtroRubro, filtroCiudad, filt
 
     if (filtroHorario !== null) {
         restaurantesFiltrados = restaurantesFiltrados.filter(function(res) {
-            return res.devolverHorarios.some(horario => horario == filtroHorario);
+            return res.devolverHorarios().some(horario => horario == filtroHorario);
         });
     }
     return restaurantesFiltrados;

@@ -37,6 +37,13 @@ describe('Restaurant',function(){
                 expect(restaurante.devolverHorarios().length).to.equal(cantHorariosAntesReserva);
                 expect(restaurante.devolverHorarios()).to.equal(horariosIniciales);
             });
+            it('por indicar horario vacío, el arreglo de horarios no modifica sus elementos', function(){
+                var horariosIniciales = restaurante.devolverHorarios();
+                var cantHorariosAntesReserva = restaurante.devolverHorarios().length;
+                restaurante.reservarHorario("");
+                expect(restaurante.devolverHorarios().length).to.equal(cantHorariosAntesReserva);
+                expect(restaurante.devolverHorarios()).to.equal(horariosIniciales);
+            });
         });
     });    
     describe('obtenerPuntuacion', function(){
@@ -60,7 +67,7 @@ describe('Restaurant',function(){
                 var puntuacion = restaurante.obtenerPuntuacion();
                 expect(puntuacion).to.equal(0);
             });
-            it('[3, 3, 4] se obtiene 3.33', function(){
+            it('[3, 3, 4] se obtiene 3.3', function(){
                 restaurante.calificaciones = [3, 3, 4];
                 var puntuacion = restaurante.obtenerPuntuacion();
                 expect(puntuacion).to.equal(3.3);
@@ -80,11 +87,29 @@ describe('Restaurant',function(){
                  "../img/pizza3.jpg", 
                  [8, 4, 6, 7, 7, 9, 1]);
         });
-        describe(' con 5 se obtienen las siguientes calificaciones ',function(){
-            it('[8, 4, 6, 7, 7, 9, 1, 5]', function(){
+        describe(' con un valor válido 5,',function(){
+            it(' se agrega a la lista de calificaciones', function(){
                 var puntuacionesEsperadas = [8, 4, 6, 7, 7, 9, 1, 5];
+                var cantidadCalificacionesAnt = restaurante.calificaciones.length;
                 restaurante.calificar(5);
                 expect(restaurante.calificaciones).to.eql(puntuacionesEsperadas);
+                expect(restaurante.calificaciones.length).to.be.equal(cantidadCalificacionesAnt + 1);
+            });
+        });
+        describe(' con un valor inválido  ,',function(){
+            it(' vacio, este no se agrega a la lista de calificaciones', function(){
+                var calificacionesEsperadas = restaurante.calificaciones;
+                var cantidadCalificacionesAnt = restaurante.calificaciones.length;
+                restaurante.calificar();
+                expect(restaurante.calificaciones).to.eql(calificacionesEsperadas);
+                expect(restaurante.calificaciones.length).to.be.equal(cantidadCalificacionesAnt);
+            });
+            it(' string, este no se agrega a la lista de calificaciones', function(){
+                var calificacionesEsperadas = restaurante.calificaciones;
+                var cantidadCalificacionesAnt = restaurante.calificaciones.length;
+                restaurante.calificar("invalido");
+                expect(restaurante.calificaciones).to.eql(calificacionesEsperadas);
+                expect(restaurante.calificaciones.length).to.be.equal(cantidadCalificacionesAnt);
             });
         });
     });    
