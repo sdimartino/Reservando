@@ -18,72 +18,48 @@ Listado.prototype.calificarRestaurant = function(id, calificacion) {
 
 //Dado un id, busca el objeto del listado que tiene ese id
 Listado.prototype.buscarRestaurante = function(id) {
-    for (var i = 0; i < this.restaurantes.length; i++) {
-        if (this.restaurantes[i].id === id) {
-            return this.restaurantes[i]
-        }
-    }
-    return "No se ha encontrado ningún restaurant";
+    var restaurantEncontrado = this.restaurantes.find(restaurant => restaurant.id === id);
+    return restaurantEncontrado != undefined? restaurantEncontrado : "No se ha encontrado ningún restaurant";
 }
 
 //Obtiene todas las ciudades de los restaurantes sin repetidos
-Listado.prototype.obtC = function() {
-    //Array donde se van a ir agregando las ciudades (van a estar repetidas)
-    var c = [];
-    //Se recorre el array de restaurantes y se va agregando al array creado, todas las ubicaciones o ciudades encontradas
-    for (var i = 0; i < this.restaurantes.length; i++) {
-        c.push(this.restaurantes[i].ubicacion);
-    }
-    //Se crea un nuevo array donde se van a agregar las ciudades pero sin repetirse
-    var c2 = c.filter(function(elem, index, self) {
-        return index === self.indexOf(elem);
-    });
-
-    return c2.sort();
+Listado.prototype.obtenerUbicaciones = function() {
+    var ciudades = [];
+    ciudades.push(restaurantes.map(restaurant => restaurant.ubicacion));
+    return this.eliminarRepetidos(ciudades);
 }
 
 //Obtiene todos los rubros de los restaurantes sin repetidos. Su funcionamiento es similar a obtC()
-Listado.prototype.obtR = function() {
-    var r = [];
-    for (var i = 0; i < this.restaurantes.length; i++) {
-        r.push(this.restaurantes[i].rubro);
-    }
-
-    var r2 = r.filter(function(elem, index, self) {
-        return index === self.indexOf(elem);
-    });
-
-    return r2.sort();
+Listado.prototype.obtenerRubros = function() {
+    var rubros = [];
+    rubros.push(this.restaurantes.map( restaurant => restaurant.rubro));
+    return this.eliminarRepetidos(rubros);
 }
 
 //Obtiene todos los horarios de los restaurantes (sin repetidos). Está funcionalidad es un poco más compleja ya que un restaurante
 //tiene un array de horarios. Al buscarlos todos vamos a pasar a tener un array de arrays que luego vamos a tener que 
 //convertir en uno solo
-Listado.prototype.obtH = function() {
+Listado.prototype.obtenerHorarios = function() {
     //En este array se van a cargar los arrays de horarios, que luego vamos convertir en un solo array
-    var arregloH = [];
-    //Recorremos el array de restaurantes y vamos agregando todos los array de horarios
-    for (var i = 0; i < this.restaurantes.length; i++) {
-        //arregloH.push(this.restaurantes[i].horarios);
-        arregloH.push(this.restaurantes[i].devolverHorarios());
-    }
-
+    var horarios = [];
+    horarios.push(this.restaurantes.map(restaurant => restaurant.horarios));
     //En este arreglo vamos a poner todos los horarios, uno por uno
-    var h = [];
-    arregloH.forEach(function(a) {
+    var todosLosHorarios = [];
+    horarios.forEach(function(a) {
         a.forEach(function(hor) {
-            h.push(hor)
+            todosLosHorarios.push(hor);
         });
     });
-
-    //En este arreglo vamos a poner todos los horarios pero sin repetidos
-    var h2 = h.filter(function(elem, index, self) {
-        return index === self.indexOf(elem);
-    });
-
-    return h2.sort();
+    return this.eliminarRepetidos(todosLosHorarios);
 }
 
+Listado.prototype.eliminarRepetidos = function(elementos){
+    var elementosNoRepetidos;
+    elementosNoRepetidos = elementos.filter(function(elem,index,self){
+        return index === self.indexOf(elem);
+    })
+    return elementosNoRepetidos;
+}
 //Función que recibe los filtros que llegan desde el HTML y filtra el arreglo de restaurantes.
 //Solo se filtra si el valor recibido es distinto de null.
 Listado.prototype.obtenerRestaurantes = function(filtroRubro, filtroCiudad, filtroHorario) {

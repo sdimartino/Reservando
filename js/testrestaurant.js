@@ -28,21 +28,21 @@ describe('Restaurant',function(){
                 var horariosIniciales = restaurante.devolverHorarios();
                 restaurante.reservarHorario("11:00");
                 expect(restaurante.devolverHorarios().length).to.equal(cantHorariosAntesReserva);
-                expect(restaurante.devolverHorarios()).to.be.equal(horariosIniciales);
+                expect(restaurante.devolverHorarios()).to.eql(horariosIniciales);
             });
             it('por no indicar horario alguno, el arreglo de horarios no modifica sus elementos', function(){
                 var horariosIniciales = restaurante.devolverHorarios();
                 var cantHorariosAntesReserva = restaurante.devolverHorarios().length;
                 restaurante.reservarHorario();
                 expect(restaurante.devolverHorarios().length).to.equal(cantHorariosAntesReserva);
-                expect(restaurante.devolverHorarios()).to.equal(horariosIniciales);
+                expect(restaurante.devolverHorarios()).to.eql(horariosIniciales);
             });
             it('por indicar horario vacío, el arreglo de horarios no modifica sus elementos', function(){
                 var horariosIniciales = restaurante.devolverHorarios();
                 var cantHorariosAntesReserva = restaurante.devolverHorarios().length;
                 restaurante.reservarHorario("");
                 expect(restaurante.devolverHorarios().length).to.equal(cantHorariosAntesReserva);
-                expect(restaurante.devolverHorarios()).to.equal(horariosIniciales);
+                expect(restaurante.devolverHorarios()).to.eql(horariosIniciales);
             });
         });
     });    

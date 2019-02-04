@@ -1,6 +1,6 @@
 **Reservando**  
 
-Reservando es un proyecto cuyo objetivo fue poner en práctica los conceptos de refactoring, testing y TDD. Realice la construccion de pruebas que validan el funcionamiento de la aplicación y  ayudan a detectar errores en ella. Luego de tener esas pruebas, se refactorizo el código del proyecto
+Reservando es un proyecto cuyo objetivo fue poner en práctica la definición de casos de prueba, refactoring y TDD.
 
 - [x] TDD
 - [x] Unit Test
