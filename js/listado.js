@@ -25,7 +25,7 @@ Listado.prototype.buscarRestaurante = function(id) {
 //Obtiene todas las ciudades de los restaurantes sin repetidos
 Listado.prototype.obtenerUbicaciones = function() {
     var ciudades = [];
-    ciudades.push(restaurantes.map(restaurant => restaurant.ubicacion));
+    ciudades.push(this.restaurantes.map(restaurant => restaurant.ubicacion));
     return this.eliminarRepetidos(ciudades);
 }
 
