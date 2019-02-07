@@ -3,9 +3,9 @@ var Restaurant = function(id, nombre, rubro, ubicacion, horariosDisponibles, ima
     this.nombre = nombre;
     this.rubro = rubro;
     this.ubicacion = ubicacion;
-    // this.horarios = horarios;
     this.imagen = imagen;
     this.calificaciones = calificaciones;
+    //private field
     var horarios= horariosDisponibles;
 
     this.devolverHorarios = function(){

@@ -43,4 +43,4 @@ Reserva.prototype.descuento = function(){
             descuentoAAplicar = descuentoAAplicar + this.precioBase() * 0.15;
         }
         return descuentoAAplicar;
-}
+}   

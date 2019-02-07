@@ -24,16 +24,12 @@ Listado.prototype.buscarRestaurante = function(id) {
 
 //Obtiene todas las ciudades de los restaurantes sin repetidos
 Listado.prototype.obtenerUbicaciones = function() {
-    var ciudades = [];
-    ciudades.push(this.restaurantes.map(restaurant => restaurant.ubicacion));
-    return this.eliminarRepetidos(ciudades);
+    return this.eliminarRepetidos(this.restaurantes.map(restaurant => restaurant.ubicacion));
 }
 
 //Obtiene todos los rubros de los restaurantes sin repetidos. Su funcionamiento es similar a obtC()
 Listado.prototype.obtenerRubros = function() {
-    var rubros = [];
-    rubros.push(this.restaurantes.map( restaurant => restaurant.rubro));
-    return this.eliminarRepetidos(rubros);
+        return this.eliminarRepetidos(this.restaurantes.map( restaurant => restaurant.rubro));
 }
 
 //Obtiene todos los horarios de los restaurantes (sin repetidos). Está funcionalidad es un poco más compleja ya que un restaurante
@@ -42,7 +38,7 @@ Listado.prototype.obtenerRubros = function() {
 Listado.prototype.obtenerHorarios = function() {
     //En este array se van a cargar los arrays de horarios, que luego vamos convertir en un solo array
     var horarios = [];
-    horarios.push(this.restaurantes.map(restaurant => restaurant.horarios));
+    this.restaurantes.map(restaurant => horarios.push(restaurant.devolverHorarios()));
     //En este arreglo vamos a poner todos los horarios, uno por uno
     var todosLosHorarios = [];
     horarios.forEach(function(a) {
@@ -54,12 +50,13 @@ Listado.prototype.obtenerHorarios = function() {
 }
 
 Listado.prototype.eliminarRepetidos = function(elementos){
-    var elementosNoRepetidos;
+    var elementosNoRepetidos=[];
     elementosNoRepetidos = elementos.filter(function(elem,index,self){
         return index === self.indexOf(elem);
     })
-    return elementosNoRepetidos;
+    return elementosNoRepetidos.sort();
 }
+
 //Función que recibe los filtros que llegan desde el HTML y filtra el arreglo de restaurantes.
 //Solo se filtra si el valor recibido es distinto de null.
 Listado.prototype.obtenerRestaurantes = function(filtroRubro, filtroCiudad, filtroHorario) {

@@ -1,7 +1,7 @@
 describe('Listado',function(){
-    var listDeRestaurantes;
+    var listDeRestaurantesTest;
     beforeEach(() => {
-        listDeRestaurantes = [
+        listDeRestaurantesTest = [
             new Restaurant(1, "TAO Uptown", "Asiática", "Nueva York", ["13:00", "15:30", "18:00"], "../img/asiatica1.jpg", [6, 7, 9, 10, 5]),
             new Restaurant(2, "Mandarín Kitchen", "Asiática", "Londres", ["15:00", "14:30", "12:30"], "../img/asiatica2.jpg", [7, 7, 3, 9, 7]),
             new Restaurant(3, "Burgermeister", "Hamburguesa", "Berlín", ["11:30", "12:00", "22:30"], "../img/hamburguesa4.jpg", [5, 8, 4, 9, 9]),
@@ -31,7 +31,7 @@ describe('Listado',function(){
     describe('buscarRestaurante', function(){
         describe('válido',function(){
             it('  cuyo id es 11, lo devuelve', function(){
-                var listado = new Listado(listDeRestaurantes);
+                var listado = new Listado(listDeRestaurantesTest);
                 var restauranteObtenido = listado.buscarRestaurante(11);
                 expect(restauranteObtenido.id).to.be.equal(11);
                 expect(restauranteObtenido.nombre).to.be.equal("Frogburguer");
@@ -39,106 +39,107 @@ describe('Listado',function(){
         });
         describe('inválido',function(){
             it('  cuyo id es 25 y no pertenece a la lista. Muestra mensaje de validación', function(){
-                var listado = new Listado(listDeRestaurantes);
+                var listado = new Listado(listDeRestaurantesTest);
                 var restauranteObtenido = listado.buscarRestaurante(25);
                 expect(restauranteObtenido).to.be.equal("No se ha encontrado ningún restaurant");
             });
             it('  por pasar un valor vacio. Muestra mensaje de validación', function(){
-                var listado = new Listado(listDeRestaurantes);
+                var listado = new Listado(listDeRestaurantesTest);
                 var restauranteObtenido = listado.buscarRestaurante();
                 expect(restauranteObtenido).to.be.equal("No se ha encontrado ningún restaurant");
             });
             it('  por pasar un valor string. Muestra mensaje de validación', function(){
-                var listado = new Listado(listDeRestaurantes);
+                var listado = new Listado(listDeRestaurantesTest);
                 var restauranteObtenido = listado.buscarRestaurante("blabla");
                 expect(restauranteObtenido).to.be.equal("No se ha encontrado ningún restaurant");
             });
         });
     });
     describe('obtenerRestaurantes', function(){
-        var restauranteEsperado;
-        var restauranteEsperado2;
-        beforeEach(() => {
-            restauranteEsperado = new Restaurant(1, "TAO Uptown", "Asiática", "Nueva York", ["13:00", "15:30", "18:00"], "../img/asiatica1.jpg", [6, 7, 9, 10, 5]);
-            restauranteEsperado2 =  new Restaurant(1, "TAO Uptown", "Asiática", "Nueva York", ["13:00", "15:30", "18:00"], "../img/asiatica1.jpg", [6, 7, 9, 10, 5]);
-        });
         describe('válidos ',function(){
             it(' cuyos filtros son ("Asiática", "Nueva York", "13:00"), devuelve TAO Uptown', function(){
-                var listado = new Listado(listDeRestaurantes);
+                var listado = new Listado(listDeRestaurantesTest);
                 var restauranteObtenido = listado.obtenerRestaurantes("Asiática", "Nueva York", "13:00");
-                //expect(restauranteEsperado).to.deep.equal(restauranteEsperado2);
                 expect(restauranteObtenido.length).to.be.equal(1);
                 expect(restauranteObtenido[0].id).to.be.equal(1);
                 expect(restauranteObtenido[0].nombre).to.be.equal("TAO Uptown");
             });
             it(' cuyos filtros son ("Asiática", "Nueva York", null),  devuelve TAO Uptown', function(){
-                var listado = new Listado(listDeRestaurantes);
+                var listado = new Listado(listDeRestaurantesTest);
                 var restauranteObtenido = listado.obtenerRestaurantes("Asiática", "Nueva York", null);
                 expect(restauranteObtenido.length).to.be.equal(1);
                 expect(restauranteObtenido[0].id).to.be.equal(1);
                 expect(restauranteObtenido[0].nombre).to.be.equal("TAO Uptown");
             });
-            // it(' cuyos filtros son ("Asiática", "Nueva York", ""),  devuelve TAO Uptown', function(){
-            //     var listado = new Listado(listDeRestaurantes);
-            //     var restauranteObtenido = listado.obtenerRestaurantes("Asiática", "Nueva York", "");
-            //     expect(restauranteObtenido.length).to.be.equal(1);
-            //     expect(restauranteObtenido[0].id).to.be.equal(1);
-            //     expect(restauranteObtenido[0].nombre).to.be.equal("TAO Uptown");
-            // });
+            it(' cuyos filtros son ("Asiática", "Nueva York", ""),  no encuentra opciones', function(){
+                var listado = new Listado(listDeRestaurantesTest);
+                var restauranteObtenido = listado.obtenerRestaurantes("Asiática", "Nueva York", "");
+                expect(restauranteObtenido.length).to.be.equal(0);
+            });
             it(' cuyos filtros son ("Asiática", null, "13:00"),  devuelve TAO Uptown', function(){
-                var listado = new Listado(listDeRestaurantes);
+                var listado = new Listado(listDeRestaurantesTest);
                 var restauranteObtenido = listado.obtenerRestaurantes("Asiática", null, "13:00");
                 expect(restauranteObtenido.length).to.be.equal(1);
                 expect(restauranteObtenido[0].id).to.be.equal(1);
                 expect(restauranteObtenido[0].nombre).to.be.equal("TAO Uptown");
             });
-            // it(' cuyos filtros son ("Asiática", "", "13:00"),  devuelve TAO Uptown', function(){
-            //     var listado = new Listado(listDeRestaurantes);
-            //     var restauranteObtenido = listado.obtenerRestaurantes("Asiática", "", "13:00");
-            //     expect(restauranteObtenido.length).to.be.equal(1);
-            //     expect(restauranteObtenido[0].id).to.be.equal(1);
-            //     expect(restauranteObtenido[0].nombre).to.be.equal("TAO Uptown");
-            // });
+            it(' cuyos filtros son ("Asiática", "", "13:00"),  no encuentra opciones', function(){
+                var listado = new Listado(listDeRestaurantesTest);
+                var restauranteObtenido = listado.obtenerRestaurantes("Asiática", "", "13:00");
+                expect(restauranteObtenido.length).to.be.equal(0);
+            });
             it(' cuyos filtros son (null, "Nueva York", "13:00"),  devuelve TAO Uptown', function(){
-                var listado = new Listado(listDeRestaurantes);
+                var listado = new Listado(listDeRestaurantesTest);
                 var restauranteObtenido = listado.obtenerRestaurantes(null, "Nueva York", "13:00");
                 expect(restauranteObtenido.length).to.be.equal(1);
                 expect(restauranteObtenido[0].id).to.be.equal(1);
                 expect(restauranteObtenido[0].nombre).to.be.equal("TAO Uptown");
             });
-            // it(' cuyos filtros son ("", "Nueva York", "13:00"),  devuelve TAO Uptown', function(){
-            //     var listado = new Listado(listDeRestaurantes);
-            //     var restauranteObtenido = listado.obtenerRestaurantes("", "Nueva York", "13:00");
-            //     expect(restauranteObtenido.length).to.be.equal(1);
-            //     expect(restauranteObtenido[0].id).to.be.equal(1);
-            //     expect(restauranteObtenido[0].nombre).to.be.equal("TAO Uptown");
-            // });
+            it(' cuyos filtros son ("", "Nueva York", "13:00"),  no encuentra opciones', function(){
+                var listado = new Listado(listDeRestaurantesTest);
+                var restauranteObtenido = listado.obtenerRestaurantes("", "Nueva York", "13:00");
+                expect(restauranteObtenido.length).to.be.equal(0);
+            });
             it(' cuyos filtros son (null, null, null), devuelve los 24 restaurantes de la lista', function(){
-                var listado = new Listado(listDeRestaurantes);
+                var listado = new Listado(listDeRestaurantesTest);
                 var restaurantesObtenido = listado.obtenerRestaurantes(null, null, null);
                 expect(restaurantesObtenido.length).to.be.equal(24);
             });
-            // it(' cuyos filtros son ("", "", ""), devuelve los 24 restaurantes de la lista', function(){
-            //     var listado = new Listado(listDeRestaurantes);
-            //     var restaurantesObtenido = listado.obtenerRestaurantes("", "", "");
-            //     expect(restaurantesObtenido.length).to.be.equal(24);
-            // });
+            it(' cuyos filtros son ("", "", ""), no encuentra opciones', function(){
+                var listado = new Listado(listDeRestaurantesTest);
+                var restaurantesObtenido = listado.obtenerRestaurantes("", "", "");
+                expect(restaurantesObtenido.length).to.be.equal(0);
+            });
+            it(' cuyos filtros son (null, "Berlín", null), devuelve 5 restaurantes cuyos ids son [3, 5, 6, 17, 21] ', function(){
+                var listado = new Listado(listDeRestaurantesTest);
+                var restaurantesEsperados = [3, 5, 6, 17, 21];
+                var restaurantesObtenidos = listado.obtenerRestaurantes(null, "Berlín", null);
+                restaurantesObtenidos= restaurantesObtenidos.map(restaurante => restaurante.id);
+                expect(restaurantesObtenidos).to.deep.eql(restaurantesEsperados);
+            });
+            it(' cuyos filtros son ("Pizza", null, null), devuelve 4 restaurantes cuyos ids son [4, 18, 20, 21] ', function(){
+                var listado = new Listado(listDeRestaurantesTest);
+                var restaurantesEsperados = [4, 18, 20, 21];
+                var restaurantesObtenidos = listado.obtenerRestaurantes("Pizza", null, null);
+                restaurantesObtenidos= restaurantesObtenidos.map(restaurante => restaurante.id);
+                expect(restaurantesObtenidos).to.deep.eql(restaurantesEsperados);
+            });
             
         });
         describe('inválidos ',function(){
             it(' cuyos filtros son ("Asiática", "Nueva York", "12:00"), no devuelve ningún restaurante', function(){
-                var listado = new Listado(listDeRestaurantes);
+                var listado = new Listado(listDeRestaurantesTest);
                 var restauranteObtenido = listado.obtenerRestaurantes("Asiática", "Nueva York", "12:00");
                 expect(restauranteObtenido.length).to.be.equal(0);
             });
             it(' cuyos filtros son ("Asiática", "Rosario", "13:00"), no devuelve ningún restaurante', function(){
-                var listado = new Listado(listDeRestaurantes);
+                var listado = new Listado(listDeRestaurantesTest);
                 var restauranteObtenido = listado.obtenerRestaurantes("Asiática", "Rosario", "13:00");
                 expect(restauranteObtenido.length).to.be.equal(0);
                 
             });
             it(' cuyos filtros son ("Peruana", "Nueva York", "13:00"), no devuelve ningún restaurante', function(){
-                var listado = new Listado(listDeRestaurantes);
+                var listado = new Listado(listDeRestaurantesTest);
                 var restauranteObtenido = listado.obtenerRestaurantes("Peruana", "Nueva York", "13:00");
                 expect(restauranteObtenido.length).to.be.equal(0);
                 
